@@ -13,8 +13,8 @@
 	<description>Wangdm Maven Plugins</description>
 
 	<properties>
-		<wangdm.maven.plugins.version>0.0.1</wangdm.maven.plugins.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.version>3.0</maven.version>
 	</properties>
 
 	<licenses>
@@ -48,7 +48,21 @@
 
 		<plugins>
 			<plugin>
+				<groupId>cn.wangdm.maven.plugins</groupId>
+				<artifactId>wangdm-fake-maven-plugin</artifactId>
+				<version>0.0.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>fake</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -106,6 +120,6 @@
 	</profiles>
 
 	<modules>
-		<module>wangdm-fake-plugin</module>
+		<module>wangdm-fake-maven-plugin</module>
 	</modules>
 </project>

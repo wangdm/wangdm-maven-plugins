@@ -85,7 +85,7 @@ public class FakeMojo extends AbstractMojo {
     private MavenArchiveConfiguration archive = new MavenArchiveConfiguration();
 
 	public void execute() throws MojoExecutionException {
-		getLog().info( "Hello, world." );
+		getLog().info( "Building fake jar." );
 
         if ( !"pom".equals( project.getPackaging() ) )
         {
@@ -95,8 +95,10 @@ public class FakeMojo extends AbstractMojo {
     			f.mkdirs();
     		}
     		
-            MavenArchiver archiver = new MavenArchiver();
-            archiver.setArchiver( jarArchiver );
+            MavenArchiver sourceArchiver = new MavenArchiver();
+            sourceArchiver.setArchiver( jarArchiver );
+            MavenArchiver docArchiver = new MavenArchiver();
+            docArchiver.setArchiver( jarArchiver );
 
     		File readme = new File(f, "README");
     		if(!readme.exists()) {
@@ -105,11 +107,15 @@ public class FakeMojo extends AbstractMojo {
 				} catch (IOException e) {
 				}
     		}
-    		archiver.getArchiver().addFile(readme, "README");
-            File outputFile = new File( outputDirectory, finalName + "-sources.jar");
-            archiver.setOutputFile(outputFile);
+    		sourceArchiver.getArchiver().addFile(readme, "README");
+    		docArchiver.getArchiver().addFile(readme, "README");
+            File sourceFile = new File( outputDirectory, finalName + "-sources.jar");
+            sourceArchiver.setOutputFile(sourceFile);
+            File docFile = new File( outputDirectory, finalName + "-javadoc.jar");
+            docArchiver.setOutputFile(docFile);
             try {
-				archiver.createArchive(session, project, archive);
+            	sourceArchiver.createArchive(session, project, archive);
+            	docArchiver.createArchive(session, project, archive);
 			} catch (ManifestException | IOException | DependencyResolutionRequiredException e) {
 			}
             readme.delete();
