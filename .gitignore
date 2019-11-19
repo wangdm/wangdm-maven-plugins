@@ -24,6 +24,8 @@ hs_err_pid*
 /.metadata/
 /.recommenders/
 target
+.idea
+*.iml
 .settings
 .classpath
 .project
