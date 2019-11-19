@@ -11,6 +11,7 @@
 
 	<name>Fake Maven Plugin</name>
 	<url>http://maven.apache.org</url>
+	<description>Wangdm Fake Maven Plugins</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -118,18 +119,6 @@
 		</plugins>
 	</build>
 
-	<!--Maven Central Repository -->
-    <distributionManagement>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-        <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
 	<profiles>
 		<profile>
 			<id>sonatype-oss-release</id>
@@ -147,6 +136,43 @@
 						</configuration>
 					</plugin>
 					<plugin>
+						<groupId>cn.wangdm.maven.plugins</groupId>
+						<artifactId>wangdm-fake-maven-plugin</artifactId>
+						<version>0.0.1</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>fake</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+<!--					<plugin>-->
+<!--						<artifactId>maven-source-plugin</artifactId>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<id>attach-sources</id>-->
+<!--								<phase>package</phase>-->
+<!--								<goals>-->
+<!--									<goal>jar-no-fork</goal>-->
+<!--								</goals>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+<!--					<plugin>-->
+<!--						<artifactId>maven-javadoc-plugin</artifactId>-->
+<!--						<executions>-->
+<!--							<execution>-->
+<!--								<id>attach-javadocs</id>-->
+<!--								<phase>package</phase>-->
+<!--								<goals>-->
+<!--									<goal>jar</goal>-->
+<!--								</goals>-->
+<!--							</execution>-->
+<!--						</executions>-->
+<!--					</plugin>-->
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
 						<version>1.6</version>
@@ -162,43 +188,17 @@
 					</plugin>
 				</plugins>
 			</build>
-		</profile>
-		<profile>
-			<id>run-its</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-invoker-plugin</artifactId>
-						<version>1.7</version>
-						<configuration>
-							<debug>true</debug>
-							<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
-							<pomIncludes>
-								<pomInclude>*/pom.xml</pomInclude>
-							</pomIncludes>
-							<postBuildHookScript>verify</postBuildHookScript>
-							<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
-							<settingsFile>src/it/settings.xml</settingsFile>
-							<goals>
-								<goal>clean</goal>
-								<goal>test-compile</goal>
-							</goals>
-						</configuration>
-						<executions>
-							<execution>
-								<id>integration-test</id>
-								<goals>
-									<goal>install</goal>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-
-			</build>
+			<!--Maven Central Repository -->
+			<distributionManagement>
+				<repository>
+					<id>sonatype-nexus-staging</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+				<snapshotRepository>
+					<id>sonatype-nexus-snapshots</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
 		</profile>
 	</profiles>
 </project>
